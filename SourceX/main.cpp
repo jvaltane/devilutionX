@@ -8,6 +8,10 @@
 
 #include "all.h"
 
+#ifdef __MORPHOS__
+ULONG __stack = 20000;
+#endif
+
 #if !defined(__APPLE__)
 extern "C" const char *__asan_default_options()
 {
