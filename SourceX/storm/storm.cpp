@@ -15,6 +15,13 @@
 
 #include "DiabloUI/diabloui.h"
 
+#ifdef __MORPHOS__
+// predefined unistd.h->exec.h
+# ifdef Enqueue
+#  undef Enqueue
+# endif
+#endif
+
 namespace dvl {
 
 std::string basePath;
