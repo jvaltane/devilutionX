@@ -1,0 +1,34 @@
+Short:        DevilutionX (Diablo engine)
+Author:       Joni Valtanen
+Uploader:     Joni Valtanen
+Type:         game/actio
+Version:      1.0.1-git20200330
+Requires:     PowerSDL >= 16.1
+Architecture: ppc-morphos >= 3.13
+URL:          https://github.com/diasurgical/devilutionX
+
+Diablo build for modern operating systems.
+
+Installation:
+-------------
+
+- Extract the files in the lha
+- Copy diabdat.mpq from your CD (or GoG install folder) to the DevilutionX-MOS folder
+- Run devilutionx
+
+Features:
+---------
+
+- The configurations and save games are located program folder
+- Multiplayer is not supported
+
+Legal:
+------
+
+This software is being released to the Public Domain. No assets of Diablo are being provided. You must own a copy of Diablo and have access to the assets beforehand in order to use this software.
+
+Battle.net® - Copyright © 1996 Blizzard Entertainment, Inc. All rights reserved. Battle.net and Blizzard Entertainment are trademarks or registered trademarks of Blizzard Entertainment, Inc. in the U.S. and/or other countries.
+
+Diablo® - Copyright © 1996 Blizzard Entertainment, Inc. All rights reserved. Diablo and Blizzard Entertainment are trademarks or registered trademarks of Blizzard Entertainment, Inc. in the U.S. and/or other countries.
+
+This software is in no way associated with or endorsed by Blizzard Entertainment®.
