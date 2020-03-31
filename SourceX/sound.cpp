@@ -195,8 +195,11 @@ void music_start(int nTrack)
 			int bytestoread = SFileGetFileSize(sghMusic, 0);
 			musicBuffer = (char *)DiabloAllocPtr(bytestoread);
 			SFileReadFile(sghMusic, musicBuffer, bytestoread, NULL, 0);
-
+#ifdef USE_MORPHOS_STUBS_WORKAROUND
+			musicRw = SDL_RWFromMem(musicBuffer, bytestoread);
+#else
 			musicRw = SDL_RWFromConstMem(musicBuffer, bytestoread);
+#endif
 			if (musicRw == NULL) {
 				ErrSdl();
 			}

@@ -94,7 +94,11 @@ BOOL SFileDdaBeginEx(HANDLE hFile, DWORD flags, DWORD mask, unsigned __int32 lDi
 	char *SFXbuffer = (char *)malloc(bytestoread);
 	SFileReadFile(hFile, SFXbuffer, bytestoread, NULL, NULL);
 
+#ifdef USE_MORPHOS_STUBS_WORKAROUND
+	SDL_RWops *rw = SDL_RWFromMem(SFXbuffer, bytestoread);
+#else
 	SDL_RWops *rw = SDL_RWFromConstMem(SFXbuffer, bytestoread);
+#endif
 	if (rw == NULL) {
 		SDL_Log(SDL_GetError());
 		return false;

@@ -48,7 +48,11 @@ void SoundSample::Stop()
 
 int SoundSample::SetChunk(BYTE *fileData, DWORD dwBytes)
 {
+#ifdef USE_MORPHOS_STUBS_WORKAROUND
+	SDL_RWops *buf1 = SDL_RWFromMem(fileData, dwBytes);
+#else
 	SDL_RWops *buf1 = SDL_RWFromConstMem(fileData, dwBytes);
+#endif
 	if (buf1 == NULL) {
 		return -1;
 	}

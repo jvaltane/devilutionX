@@ -76,7 +76,9 @@ bool SpawnWindow(const char *lpWindowName, int nWidth, int nHeight)
 	SetVideoModeToPrimary(fullscreen);
 	if (grabInput)
 		SDL_WM_GrabInput(SDL_GRAB_ON);
+# ifndef USE_MORPHOS_STUBS_WORKAROUND
 	atexit(SDL_VideoQuit); // Without this video mode is not restored after fullscreen.
+# endif
 #else
 	int flags = 0;
 	if (upscale) {
