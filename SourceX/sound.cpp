@@ -200,7 +200,11 @@ void music_start(int nTrack)
 			if (musicRw == NULL) {
 				ErrSdl();
 			}
+#ifdef __MORPHOS__
+			music = Mix_LoadMUS_RW(musicRw);
+#else
 			music = Mix_LoadMUSType_RW(musicRw, MUS_NONE, 1);
+#endif
 			Mix_VolumeMusic(MIX_MAX_VOLUME - MIX_MAX_VOLUME * sglMusicVolume / VOLUME_MIN);
 			Mix_PlayMusic(music, -1);
 
