@@ -772,7 +772,7 @@ inline char *SDL_GetBasePath()
 		retval = readSymLink("/proc/curproc/exe");
 #elif defined(__QNXNTO__)
 		retval = SDL_LoadFile("/proc/self/exefile", NULL);
-#else
+#elif !defined(__MORPHOS__)
 		retval = readSymLink("/proc/self/exe"); /* linux. */
 		if (retval == NULL) {
 			/* older kernels don't have /proc/self ... try PID version... */
@@ -812,6 +812,16 @@ inline char *SDL_GetBasePath()
 
 inline char *SDL_GetPrefPath(const char *org, const char *app)
 {
+#ifdef __MORPHOS__
+	char *retval = NULL;
+	retval = (char *)SDL_malloc(1);
+	if (!retval) {
+		SDL_OutOfMemory();
+		return NULL;
+	}
+    retval[0] = '\0';
+    return retval;
+#else
 	// From sdl2-2.0.9/src/filesystem/unix/SDL_sysfilesystem.c
 	/*
      * We use XDG's base directory spec, even if you're not on Linux.
@@ -891,4 +901,5 @@ inline char *SDL_GetPrefPath(const char *org, const char *app)
 	}
 
 	return retval;
+#endif
 }
