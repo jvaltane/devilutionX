@@ -9,9 +9,6 @@
 #include "all.h"
 
 #ifdef __MORPHOS__
-# ifdef USE_MORPHOS_STUBS_WORKAROUND
-struct Library *SDL2Base = NULL;
-# endif
 ULONG __stack = 20000;
 #endif
 

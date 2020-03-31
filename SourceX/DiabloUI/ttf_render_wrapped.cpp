@@ -50,7 +50,11 @@ SDL_Surface *RenderUTF8_Solid_Wrapped(TTF_Font *font, const char *text, SDL_Colo
 			return nullptr;
 		}
 
-		SDL_strlcpy(str, text, str_len + 1);
+#ifdef USE_MORPHOS_STUBS_WORKAROUND
+        strlcpy(str, text, str_len + 1);
+#else
+        SDL_strlcpy(str, text, str_len + 1);
+#endif
 		tok = str;
 		end = str + str_len;
 		do {
