@@ -1,4 +1,8 @@
+if(MORPHOS)
+cmake_minimum_required(VERSION 3.8)
+else()
 cmake_minimum_required(VERSION 3.10) # CMP0083 NEW
+endif()
 
 include(CMake/out_of_tree.cmake)
 
@@ -50,6 +54,7 @@ project(DevilutionX
   VERSION ${GIT_TAG}
   LANGUAGES C CXX)
 
+if(NOT MORPHOS)
 if(LTO)
   # Use LTO on compilers where it is supported.
   include(CheckIPOSupported)
@@ -60,6 +65,7 @@ if(LTO)
     message(WARNING "LTO not supported by this compiler and/or CMake version:")
     message(WARNING ${lto_error})
   endif()
+endif()
 endif()
 
 list(APPEND CMAKE_MODULE_PATH "${DevilutionX_SOURCE_DIR}/CMake")
@@ -110,6 +116,10 @@ endif()
 
 if(AMIGA)
   include(amiga_defs)
+endif()
+
+if(MORPHOS)
+    include(morphos_sdl12_defs)
 endif()
 
 if(DIST)
