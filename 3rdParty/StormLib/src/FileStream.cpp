@@ -511,7 +511,7 @@ static bool BaseMap_Open(TFileStream * pStream, const TCHAR * szFileName, DWORD 
         // Get the file size
         if(fstat64(handle, &fileinfo) != -1)
         {
-#if !defined(PLATFORM_AMIGA) && !defined(PLATFORM_MORPHOS)
+#if !defined(PLATFORM_AMIGA)
 #if defined(PLATFORM_SWITCH)
             pStream->Base.Map.pbFile = (LPBYTE)malloc((size_t)fileinfo.st_size);
 #else
@@ -574,7 +574,7 @@ static void BaseMap_Close(TFileStream * pStream)
         UnmapViewOfFile(pStream->Base.Map.pbFile);
 #endif
 
-#if (defined(PLATFORM_MAC) || defined(PLATFORM_LINUX) || defined(PLATFORM_HAIKU)) && !defined(PLATFORM_AMIGA) && !defined(PLATFORM_SWITCH) && !defined(PLATFORM_MORPHOS)
+#if (defined(PLATFORM_MAC) || defined(PLATFORM_LINUX) || defined(PLATFORM_HAIKU) || defined(PLATFORM_MORPHOS)) && !defined(PLATFORM_AMIGA) && !defined(PLATFORM_SWITCH)
 
     //Todo(Amiga): Fix a proper solution for this
     if(pStream->Base.Map.pbFile != NULL)
