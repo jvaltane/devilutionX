@@ -2,6 +2,11 @@
 
 #include <limits>
 #include <string>
+
+#ifdef __MORPHOS__
+#include <exec/exec.h>
+#endif
+
 namespace dvl {
 
 extern std::string basePath;
@@ -14,6 +19,28 @@ extern std::string basePath;
 #endif
 
 #ifdef __cplusplus
+# ifdef __MORPHOS__
+struct CCritSect {
+    struct SignalSemaphore semaphore;
+
+	CCritSect()
+	{
+        memset(&semaphore, 0, sizeof(struct SignalSemaphore));
+        InitSemaphore(&semaphore);
+	}
+	~CCritSect()
+    {
+	}
+	void Enter()
+	{
+        ObtainSemaphore(&semaphore);
+	}
+	void Leave()
+	{
+        ReleaseSemaphore(&semaphore);
+	}
+};
+# else
 struct CCritSect {
 	SDL_mutex *m_critsect;
 
@@ -41,6 +68,7 @@ struct CCritSect {
 		}
 	}
 };
+# endif
 #endif
 
 #if defined(__GNUC__) || defined(__cplusplus)
