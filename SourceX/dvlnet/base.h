@@ -18,6 +18,13 @@
 #define LEAVE_ENDING 0x40000004
 #define LEAVE_DROP 0x40000006
 
+#ifdef __MORPHOS__
+// predefined in socket.h
+# ifdef send
+#  undef send
+# endif
+#endif
+
 namespace dvl {
 namespace net {
 
