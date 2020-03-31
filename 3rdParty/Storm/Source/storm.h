@@ -20,24 +20,55 @@ extern std::string basePath;
 
 #ifdef __cplusplus
 # ifdef __MORPHOS__
-struct CCritSect {
-    struct SignalSemaphore semaphore;
 
-	CCritSect()
+#define SEM_NAME "DevilutionxMemSem"
+
+struct CCritSect {
+    std::string name;
+	CCritSect() :
+        name(SEM_NAME)
 	{
-        memset(&semaphore, 0, sizeof(struct SignalSemaphore));
-        InitSemaphore(&semaphore);
+        struct SignalSemaphore *semaphore;
+        Forbid();
+        if (!FindSemaphore((STRPTR)name.c_str())) {
+            if ((semaphore=(struct SignalSemaphore *)AllocMem(sizeof(struct SignalSemaphore),MEMF_PUBLIC|MEMF_CLEAR)))
+            {
+                semaphore->ss_Link.ln_Pri=0;
+                semaphore->ss_Link.ln_Name=(STRPTR)name.c_str();
+                AddSemaphore(semaphore);
+            }
+        }
+        Permit();
 	}
 	~CCritSect()
     {
+        struct SignalSemaphore *semaphore;
+        Forbid();
+        if ((semaphore=FindSemaphore((STRPTR)name.c_str())))
+        {
+            RemSemaphore(semaphore);
+            ObtainSemaphore(semaphore);
+            ReleaseSemaphore(semaphore);
+        }
+        if (semaphore)
+            FreeMem(semaphore, sizeof(struct SignalSemaphore));
+        Permit();
 	}
 	void Enter()
 	{
-        ObtainSemaphore(&semaphore);
+        struct SignalSemaphore *semaphore;
+        Forbid();
+        if ((semaphore = FindSemaphore((STRPTR)name.c_str())))
+            ObtainSemaphoreShared(semaphore);
+        Permit();
 	}
 	void Leave()
 	{
-        ReleaseSemaphore(&semaphore);
+        struct SignalSemaphore *semaphore;
+        Forbid();
+        if ((semaphore = FindSemaphore((STRPTR)name.c_str())))
+            ReleaseSemaphore(semaphore);
+        Permit();
 	}
 };
 # else
